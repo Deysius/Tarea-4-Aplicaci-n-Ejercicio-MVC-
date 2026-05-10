@@ -1,39 +1,95 @@
 {% extends "base.html" %}
 
-{% block title %}Comisiones de Vendedores{% endblock %}
+{% block title %}Comisiones{% endblock %}
 
 {% block content %}
-    <h2>Gestión de Comisiones</h2>
-    <form method="post" id="filtro-form">
-        <label>Fecha de Inicio: <input type="date" name="fecha_inicio" id="fecha_inicio" value="{{ fecha_inicio or '' }}" required></label>
-        <label>Fecha de Fin: <input type="date" name="fecha_fin" id="fecha_fin" value="{{ fecha_fin or '' }}" required></label>
-        <button type="submit">Buscar</button>
+
+<section class="card">
+
+    <div class="card__header">
+        <h2>Gestión de Comisiones</h2>
+    </div>
+
+    <form method="post" id="filtro-form" class="formulario">
+
+        <div class="form-group">
+            <label>Fecha Inicio</label>
+            <input type="date"
+                name="fecha_inicio"
+                id="fecha_inicio"
+                value="{{ fecha_inicio or '' }}"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha Fin</label>
+            <input type="date"
+                name="fecha_fin"
+                id="fecha_fin"
+                value="{{ fecha_fin or '' }}"
+                required>
+        </div>
+
+        <button type="submit">
+            Buscar
+        </button>
+
     </form>
-    <table>
-        <tr>
-            <th>Vendedor</th>
-            <th>Total Ventas</th>
-            <th>Porcentaje Comisión</th>
-            <th>Comisión</th>
-        </tr>
-        {% for c in comisiones %}
-        <tr>
-            <td>{{ c.vendedor }}</td>
-            <td>${{ "%.2f"|format(c.total_ventas) }}</td>
-            <td>{{ "%.2f"|format(c.porcentaje * 100) }}%</td>
-            <td class="comision">${{ "%.2f"|format(c.comision) }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <script>
-        // Validación de fechas en el cliente
-        document.getElementById('filtro-form').addEventListener('submit', function(e) {
-            const inicio = document.getElementById('fecha_inicio').value;
-            const fin = document.getElementById('fecha_fin').value;
-            if (inicio && fin && fin < inicio) {
-                alert('La fecha de fin no puede ser menor a la fecha de inicio.');
-                e.preventDefault();
-            }
-        });
-    </script>
-{% endblock %}
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Vendedor</th>
+                    <th>Total Ventas</th>
+                    <th>% Comisión</th>
+                    <th>Comisión</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for c in comisiones %}
+
+                <tr>
+                    <td>{{ c.vendedor }}</td>
+
+                    <td class="ventas">
+                        ${{ "%.2f"|format(c.total_ventas) }}
+                    </td>
+
+                    <td>
+                        {{ "%.0f"|format(c.porcentaje * 100) }}%
+                    </td>
+
+                    <td class="comision">
+                        ${{ "%.2f"|format(c.comision) }}
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<script>
+    document.getElementById('filtro-form').addEventListener('submit', function (e) {
+
+        const inicio = document.getElementById('fecha_inicio').value;
+        const fin = document.getElementById('fecha_fin').value;
+
+        if (inicio && fin && fin < inicio) {
+            alert('La fecha final no puede ser menor.');
+            e.preventDefault();
+        }
+    });
+</script>
+
+{% endblock %}  

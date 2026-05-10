@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <meta charset="UTF-8">
-    <title>{% block title %}MiniCore Vendedores{% endblock %}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        table { border-collapse: collapse; width: 60%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-        th { background: #f0f0f0; }
-        form { margin-bottom: 20px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MiniCore{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <h1>MiniCore Vendedores</h1>
-    {% block content %}{% endblock %}
+
+    <div class="background"></div>
+
+    <main class="container">
+        <header class="header">
+            <h1>MiniCore Vendedores</h1>
+            <p>Sistema de gestión de comisiones</p>
+        </header>
+
+        {% block content %}{% endblock %}
+    </main>
+
 </body>
+
 </html>
